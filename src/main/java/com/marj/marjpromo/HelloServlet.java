@@ -1,7 +1,9 @@
 package com.marj.marjpromo;
 
 import java.io.*;
+import java.sql.SQLException;
 
+import Marj.Controller.AdminController;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
@@ -17,6 +19,14 @@ public class HelloServlet extends HttpServlet {
         response.setContentType("text/html");
 
         // Hello
+
+//        AdminController controller = new AdminController();
+//        try {
+//            controller.adminAuth();
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+
         PrintWriter out = response.getWriter();
         out.println("<html><body>");
         out.println("<h1>" + message + "</h1>");
