@@ -92,7 +92,6 @@ public class GeneralAdmin implements Marj.Interfaces.GeneralAdmin {
 
         if (isAssigned == 0) {
 
-            System.out.println("yess");
             System.out.println("Enter the city the admin gonna be responsible of");
             String city = input.next();
 
@@ -122,7 +121,6 @@ public class GeneralAdmin implements Marj.Interfaces.GeneralAdmin {
         } else {
             System.out.println("admin is already assigned");
         }
-//        System.out.println(adminId + ":" + isAssigned);
 
 
     }

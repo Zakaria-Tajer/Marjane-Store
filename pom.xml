@@ -81,10 +81,11 @@
             <artifactId>javax.el-api</artifactId>
             <version>3.0.0</version>
         </dependency>
+
         <dependency>
-            <groupId>jakarta.el</groupId>
-            <artifactId>jakarta.el-api</artifactId>
-            <version>5.0.1</version>
+            <groupId>javax.el</groupId>
+            <artifactId>javax.el-api</artifactId>
+            <version>3.0.0</version>
         </dependency>
 
         <dependency>

@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "centers", schema = "marjpromo")
 @NamedQuery(name = "checkIfAdminIsAlreadyAssignedToAStore", query = "SELECT c FROM CentersEntity c JOIN AdminEntity a WHERE c.adminRespo = ?1 AND c.adminRespo = a.adminId")
+@NamedQuery(name = "getCenters", query = "SELECT c FROM CentersEntity c")
 public class CentersEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id

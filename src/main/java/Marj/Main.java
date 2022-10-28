@@ -19,11 +19,12 @@ public class Main {
     public static void main(String[] args) throws SQLException {
         AdminController adminController = new AdminController();
         GeneralAdmin generalAdmin = new GeneralAdmin();
+        Admin admin = new Admin();
         switch (menu()){
             case 1: generalAdmin.general();
                 break;
-//            case 2: generalAdmin.assignAnAdminToAStore();
-//            case 2: adminController.checkAdminAssgind(4);
+            case 2: admin.general();
+            break;
 
         }
 
