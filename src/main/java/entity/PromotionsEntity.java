@@ -2,6 +2,8 @@ package entity;
 
 import jakarta.persistence.*;
 
+import java.sql.Date;
+
 @Entity
 @Table(name = "promotions", schema = "marjpromo", catalog = "")
 @NamedQuery(name = "promotionsList", query = "SELECT p FROM PromotionsEntity p")
@@ -28,6 +30,9 @@ public class PromotionsEntity {
     @Basic
     @Column(name = "status")
     private String status;
+    @Basic
+    @Column(name = "promotion_expiring_date")
+    private Date promotionExpiringDate;
 
     public int getPromotionId() {
         return promotionId;
@@ -112,5 +117,13 @@ public class PromotionsEntity {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Date getPromotionExpiringDate() {
+        return promotionExpiringDate;
+    }
+
+    public void setPromotionExpiringDate(Date promotionExpiringDate) {
+        this.promotionExpiringDate = promotionExpiringDate;
     }
 }

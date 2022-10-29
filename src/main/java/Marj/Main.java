@@ -30,9 +30,7 @@ public class Main {
 
     }
 
-    public void createAdminForStore(){
 
-    }
 
 
 

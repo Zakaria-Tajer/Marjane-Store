@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "managers", schema = "marjpromo")
+@NamedQuery(name = "hashPassword", query = "UPDATE ManagersEntity m SET m.password = ?1 WHERE m.managerId = ?2")
+@NamedQuery(name = "getManagerId", query = "SELECT m FROM ManagersEntity m WHERE m.email = ?1")
 public class ManagersEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -22,6 +24,10 @@ public class ManagersEntity {
     @JoinColumn(name = "city_responsable_for" , referencedColumnName = "center_id")
     @Column(name = "city_responsable_for")
     private int cityResponsableFor;
+    @Basic
+    @JoinColumn(name = "city_responsable_for", referencedColumnName = "category_id")
+    @Column(name = "category_respo_for")
+    private int categoryRespoFor;
 
     public int getManagerId() {
         return managerId;
@@ -87,5 +93,13 @@ public class ManagersEntity {
         result = 31 * result + (uniqueId != null ? uniqueId.hashCode() : 0);
         result = 31 * result + cityResponsableFor;
         return result;
+    }
+
+    public int getCategoryRespoFor() {
+        return categoryRespoFor;
+    }
+
+    public void setCategoryRespoFor(int categoryRespoFor) {
+        this.categoryRespoFor = categoryRespoFor;
     }
 }

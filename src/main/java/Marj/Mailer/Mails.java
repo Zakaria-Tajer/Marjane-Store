@@ -34,6 +34,7 @@ public class Mails {
         try {
             if (message != null) {
                 send(message);
+                return "Message sent";
             } else {
                 System.out.println("Error happened while sending message");
             }

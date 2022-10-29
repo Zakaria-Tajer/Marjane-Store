@@ -1,6 +1,6 @@
 package Marj.Model.SubAdmin;
 
-import entity.AdminEntity;
+import Marj.Data.ManagerData;
 import entity.CentersEntity;
 import entity.ManagersEntity;
 import jakarta.persistence.*;
@@ -10,7 +10,7 @@ import java.util.List;
 
 public class SubAdmin {
 
-    public void createMangers(String email, String password, String uniqueId, int cityResponsableFor){
+    public void createMangers(String email, String password, String uniqueId, int cityResponsableFor, int category) {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
@@ -23,6 +23,7 @@ public class SubAdmin {
             managersEntity.setPassword(password);
             managersEntity.setUniqueId(uniqueId);
             managersEntity.setCityResponsableFor(cityResponsableFor);
+            managersEntity.setCategoryRespoFor(category);
             entityManager.persist(managersEntity);
 
             transaction.commit();
@@ -36,7 +37,8 @@ public class SubAdmin {
 
         }
     }
-    public List<CentersEntity> getCityForManagers(){
+
+    public List<CentersEntity> getCityForManagers() {
 
         List<CentersEntity> centersList = new ArrayList<>();
 
@@ -62,6 +64,70 @@ public class SubAdmin {
         }
 
         return centersList;
+    }
+
+    public void updatePassword(String hashedPassword, int managerId) {
+
+
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        try {
+            transaction.begin();
+
+            TypedQuery<ManagersEntity> managerQuery = entityManager.createNamedQuery("hashPassword", ManagersEntity.class);
+            managerQuery.setParameter(1, hashedPassword);
+            managerQuery.setParameter(2, managerId);
+
+            entityManager.merge(managerQuery);
+
+            transaction.commit();
+
+        } finally {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+            entityManager.close();
+            entityManagerFactory.close();
+
+        }
+
+    }
+
+    public int getManagerId(String email) {
+
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+
+        int id = 0;
+        try {
+            transaction.begin();
+
+            TypedQuery<ManagersEntity> managerQuery = entityManager.createNamedQuery("getManagerId", ManagersEntity.class);
+            managerQuery.setParameter(1, email);
+
+            ManagerData managerData = new ManagerData();
+            System.out.println("mammmamma" + managerQuery.getResultList());
+
+            for (ManagersEntity manager : managerQuery.getResultList()) {
+                System.out.println("idddss" + manager.getManagerId());
+                ManagerData.setManagerId(manager.getManagerId());
+            }
+
+            transaction.commit();
+
+        } finally {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+            entityManager.close();
+            entityManagerFactory.close();
+
+        }
+
+        return id;
+
     }
 
 }

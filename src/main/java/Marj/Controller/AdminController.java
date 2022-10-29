@@ -1,14 +1,8 @@
 package Marj.Controller;
-
-import Marj.Data.AdminConst;
 import Marj.Model.AdminModel.Admin;
 import entity.AdminEntity;
-
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 
 public class AdminController {

@@ -46,15 +46,6 @@ public class AdminConst {
     }
 
 
-//    public AdminConst(String email, String password, String uniqueId) {
-//        this.email = email;
-//        this.password = password;
-//        this.uniqueId = uniqueId;
-//    }
-
-
-
-
 
 
 }

@@ -5,12 +5,18 @@ import Marj.Controller.CategorieController;
 import Marj.Controller.PromotionsController;
 import Marj.Controller.SubAdminController;
 import Marj.Data.AdminConst;
+import Marj.Data.ManagerData;
+import Marj.Mailer.Mails;
 import Marj.Model.SubAdmin.SubAdmin;
 import Marj.helper.HashPassword;
 import Marj.helper.UUIDs;
 import entity.CategoryEntity;
 import entity.CentersEntity;
+import entity.ManagersEntity;
 import entity.PromotionsEntity;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -24,7 +30,7 @@ public class Admin implements Marj.Interfaces.Admin {
     HashPassword hashPassword = new HashPassword();
     AdminController adminController = new AdminController();
     SubAdminController subAdminController = new SubAdminController();
-
+    Mails mails = new Mails();
     PromotionsController promotionsController = new PromotionsController();
     CategorieController categorieController = new CategorieController();
 
@@ -74,7 +80,10 @@ public class Admin implements Marj.Interfaces.Admin {
     public void createDepartmentManager() {
         Scanner input = new Scanner(System.in);
         SubAdminController subAdminController = new SubAdminController();
+        CategorieController categoryController = new CategorieController();
+        ManagerData managerData = new ManagerData();
         List<CentersEntity> c = subAdminController.cityMangersRespo();
+        List<CategoryEntity> categories = categoryController.getCategory();
 
         System.out.println("Enter manager email:");
         String managerEmail = input.next();
@@ -87,7 +96,31 @@ public class Admin implements Marj.Interfaces.Admin {
         }
         int choice = input.nextInt();
 
-        subAdminController.createdManagers(managerEmail, managerPassword, uniqueID, choice);
+        System.out.println("Enter category responsable for: ");
+        for (CategoryEntity entity : categories) {
+            System.out.println(entity.getCategoryId() + ": " + entity.getCategoryName());
+        }
+
+        int category = input.nextInt();
+
+
+//                if manager is inserted hash password after and update it
+
+
+//        System.out.println(subAdminController.getManagerId(managerEmail).get(0));
+//        System.out.println("New Manager Id: " + newManagerId);
+
+
+        subAdminController.createdManagers(managerEmail, managerPassword, uniqueID, choice, category);
+        String msg = mails.emailSender(managerEmail, managerEmail, managerPassword);
+
+
+        if (msg.equals("Message sent")) {
+            System.out.println(msg + "Message has been sent");
+//            subAdminController.updateManagerPasswords(hashPassword.hashPassword(managerPassword), newManagerId);
+        }else {
+            System.out.println(msg + "Message has been sent or errrrrror");
+        }
     }
 
 
@@ -95,17 +128,14 @@ public class Admin implements Marj.Interfaces.Admin {
         Scanner input = new Scanner(System.in);
         List<PromotionsEntity> promo = promotionsController.getAllPromotions();
 
-        for (PromotionsEntity p : promotionsController.getAllPromotions()) {
-            System.out.println(p.getPromotionId() + " " + p.getReduction() + " " + p.getStock() + " " + p.getCategoryId());
-        }
-
         System.out.println("1: for list of approved promotions");
         System.out.println("2: for list of waiting promotions");
+        System.out.println("3: for list of last promotions");
+        System.out.println("4: for list of today promotions");
         int listPromotionsNum = input.nextInt();
 
         switch (listPromotionsNum) {
             case 1: {
-                System.out.println("dedeed");
                 for (PromotionsEntity promotions : promosGetter(promo, "!")) {
                     System.out.println(promotions.getPromotionId() + ":" + " " + promotions.getPromotionUniqueId() + " " + promotions.getStatus());
                 }
@@ -114,6 +144,18 @@ public class Admin implements Marj.Interfaces.Admin {
             case 2: {
                 for (PromotionsEntity promotions : promosGetter(promo, "")) {
                     System.out.println(promotions.getPromotionId() + ":" + " " + promotions.getPromotionUniqueId() + " " + promotions.getStatus());
+                }
+                break;
+            }
+            case 3: {
+                for (PromotionsEntity promotions : promotionsGetterFilteredByDate(promo, "Today")) {
+                    System.out.println(promotions.getPromotionId() + ":" + " " + promotions.getPromotionUniqueId() + " " + promotions.getStatus() + " " + promotions.getPromotionExpiringDate());
+                }
+                break;
+            }
+            case 4: {
+                for (PromotionsEntity promotions : promotionsGetterFilteredByDate(promo, "")) {
+                    System.out.println(promotions.getPromotionId() + ":" + " " + promotions.getPromotionUniqueId() + " " + promotions.getStatus() + " " + promotions.getPromotionExpiringDate());
                 }
                 break;
             }
@@ -144,17 +186,22 @@ public class Admin implements Marj.Interfaces.Admin {
         }
 
 
-        if(categoryName.equals("multimedia")){
-
+        assert categoryName != null;
+        if (categoryName.equals("multimedia")) {
+            System.out.println("Reduction amount cant be more than 50%");
         }
 
-            System.out.println("Enter reduction %: ");
-            int reduction;
-        do {
+        System.out.println("Enter reduction %: ");
+        int reduction = scanner.nextInt();
+        int reductionTwo;
 
+        int tempReduction;
+
+        do {
             System.out.println("please select a reduction less than 50%");
-            reduction = scanner.nextInt();
-        } while (reduction > 50);
+            reductionTwo = scanner.nextInt();
+
+        } while (reduction <= 50);
 
         System.out.println("Select center: ");
         for (CentersEntity c : centers) {
@@ -171,8 +218,13 @@ public class Admin implements Marj.Interfaces.Admin {
         System.out.println("Enter stock units : ");
         int stock = scanner.nextInt();
 
-        if (stock != 0)
-            promotionsController.generateAPromotions(reduction, centerFilteredId, stock, categoryId, uuiDs.uuid(), "waiting");
+
+        if (stock != 0) {
+            if (reduction > 50) tempReduction = reductionTwo;
+            else tempReduction = reduction;
+
+            promotionsController.generateAPromotions(tempReduction, centerFilteredId, stock, categoryId, uuiDs.uuid(), "waiting");
+        }
 
     }
 
@@ -181,6 +233,14 @@ public class Admin implements Marj.Interfaces.Admin {
         if (sign.equals("!"))
             return promo.stream().filter(c -> !c.getStatus().equals("waiting")).collect(Collectors.toList());
         else return promo.stream().filter(c -> c.getStatus().equals("waiting")).collect(Collectors.toList());
+    }
+
+    public List<PromotionsEntity> promotionsGetterFilteredByDate(List<PromotionsEntity> promo, String date) {
+
+        if (date.equals("Today"))
+            return promo.stream().filter(c -> String.valueOf(c.getPromotionExpiringDate()).equals(String.valueOf(java.time.LocalDate.now()))).collect(Collectors.toList());
+        else
+            return promo.stream().filter(c -> !String.valueOf(c.getPromotionExpiringDate()).equals(String.valueOf(java.time.LocalDate.now()))).collect(Collectors.toList());
     }
 
 }

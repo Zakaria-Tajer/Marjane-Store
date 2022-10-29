@@ -9,7 +9,7 @@ public class CategorieController {
 
     Categorie categorie = new Categorie();
 
-    public List<CategoryEntity>  getCategory() {
+    public List<CategoryEntity> getCategory() {
 
         return categorie.getAllCategories();
     }
