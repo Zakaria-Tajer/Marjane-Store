@@ -31,5 +31,9 @@ public class AdminController {
     }
 
 
+    public String getLoginAdmin(String email, String password){
+        return admin.loginAdmin(email, password);
+    }
+
 
 }

@@ -69,7 +69,7 @@ public class GeneralAdmin implements Marj.Interfaces.GeneralAdmin {
         Scanner input = new Scanner(System.in);
         System.out.println("Enter email address for the admin");
         String adminEmail = input.nextLine();
-        System.out.println("Enter email address for the admin");
+        System.out.println("Enter email password for the admin");
         String password = input.nextLine();
 
         adminController.createAdmins(adminEmail, password, uniqueID);

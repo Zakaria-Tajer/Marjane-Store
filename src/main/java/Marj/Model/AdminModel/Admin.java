@@ -49,7 +49,7 @@ public class Admin extends DbConnection {
 //        return adminLoggedUniqueId;
     }
 
-    public void loginAdmin(String email, String password) {
+    public String loginAdmin(String email, String password) {
 
 
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
@@ -69,6 +69,12 @@ public class Admin extends DbConnection {
             }
 
             transaction.commit();
+
+            if (adminQuery.getResultList().size() > 0) {
+                return "founded";
+            } else {
+                return "auth error";
+            }
 
         } finally {
             if (transaction.isActive()) {
@@ -181,7 +187,7 @@ public class Admin extends DbConnection {
             TypedQuery<CentersEntity> centerQuery = entityManager.createNamedQuery("checkIfAdminIsAlreadyAssignedToAStore", CentersEntity.class);
             centerQuery.setParameter(1, adminId);
 
-            if(centerQuery.getResultList() != null || centerQuery.getResultList().size() != 0){
+            if (centerQuery.getResultList() != null || centerQuery.getResultList().size() != 0) {
                 for (CentersEntity center : centerQuery.getResultList()) {
                     adminRespo = center.getAdminRespo();
                     System.out.println(center.getAdminRespo() + "founded");
@@ -200,7 +206,6 @@ public class Admin extends DbConnection {
         }
         return adminRespo;
     }
-
 
 
 }
