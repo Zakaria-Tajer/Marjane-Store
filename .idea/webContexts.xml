@@ -4,6 +4,7 @@
     <option name="state">
       <map>
         <entry key="file://$PROJECT_DIR$/src/main/webapp/Views/Admin/AddSubAdmin.jsp" value="file://$PROJECT_DIR$/src/main/webapp/Views/Admin" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/Views/Admin/dashboard.jsp" value="file://$PROJECT_DIR$/src/main/webapp" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/Views/Manager/index.jsp" value="file://$PROJECT_DIR$/src/main/webapp/Views/Manager" />
       </map>
     </option>

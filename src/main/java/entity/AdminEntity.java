@@ -2,13 +2,20 @@ package entity;
 
 import jakarta.persistence.*;
 
+import java.sql.Date;
+
 @Entity
 @Table(name = "admin", schema = "marjpromo")
 @NamedQuery(name = "adminSelection", query = "SELECT a FROM AdminEntity a WHERE a.email= ?1 AND a.password= ?2")
 @NamedQuery(name = "adminEmail", query = "SELECT a FROM AdminEntity a WHERE a.email= ?1")
 @NamedQuery(name = "getAdmins", query = "SELECT a FROM AdminEntity a WHERE a.role = ?1 ")
+@NamedQuery(name = "getCountsAdmin", query = "SELECT  count(a) FROM AdminEntity a WHERE a.role = ?1")
+@NamedQuery(name = "getCountsNewAdmin", query = "SELECT  count(a) FROM AdminEntity a WHERE a.role = ?1 AND a.newCommers = ?2")
+@NamedQuery(name = "getAllAdminsAssociatedCenters", query = "SELECT a FROM AdminEntity a JOIN CentersEntity c WHERE a.role = ?1")
 public class AdminEntity {
 
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JoinColumn(name = "admin_id", referencedColumnName = "admin_respo")
     @Basic
     @Id
     @Column(name = "admin_id")
@@ -26,7 +33,9 @@ public class AdminEntity {
     @Basic
     @Column(name = "role")
     private String role;
-
+    @Basic
+    @Column(name = "new_commers")
+    private Date newCommers;
 
     public String getRole() {
         return role;
@@ -35,6 +44,7 @@ public class AdminEntity {
     public void setRole(String role) {
         this.role = role;
     }
+
     public int getAdminId() {
         return adminId;
     }
@@ -91,5 +101,13 @@ public class AdminEntity {
         result = 31 * result + (uniqueId != null ? uniqueId.hashCode() : 0);
         result = 31 * result + (role != null ? role.hashCode() : 0);
         return result;
+    }
+
+    public Date getNewCommers() {
+        return newCommers;
+    }
+
+    public void setNewCommers(Date newCommers) {
+        this.newCommers = newCommers;
     }
 }

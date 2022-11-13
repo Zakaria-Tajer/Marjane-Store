@@ -24,6 +24,7 @@ public class Main {
             case 1: generalAdmin.general();
                 break;
             case 2: admin.general();
+            case 3: adminController.getNumbers();
             break;
 
         }

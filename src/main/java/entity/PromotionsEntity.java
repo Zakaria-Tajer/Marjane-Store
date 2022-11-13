@@ -5,8 +5,10 @@ import jakarta.persistence.*;
 import java.sql.Date;
 
 @Entity
-@Table(name = "promotions", schema = "marjpromo", catalog = "")
+@Table(name = "promotions", schema = "marjpromo")
 @NamedQuery(name = "promotionsList", query = "SELECT p FROM PromotionsEntity p")
+@NamedQuery(name = "getPromotionsManager", query = "SELECT  count(p) FROM PromotionsEntity p")
+
 public class PromotionsEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id

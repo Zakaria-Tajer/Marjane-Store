@@ -1,6 +1,9 @@
 package Marj.Controller;
+
+import Marj.Data.AdminsCount;
 import Marj.Model.AdminModel.Admin;
 import entity.AdminEntity;
+
 import java.sql.SQLException;
 import java.util.List;
 
@@ -22,17 +25,40 @@ public class AdminController {
     }
 
 
-    public List<AdminEntity> getAllAdmins(){
+    public List<AdminEntity> getAllAdmins() {
         return admin.getAdmins();
     }
+    public List<AdminEntity> getAllAdminsCenters() {
+        return admin.getListAdminsCenters();
+    }
 
-    public int checkAdminAssgind(int adminId){
+    public int checkAdminAssgind(int adminId) {
         return admin.checkIfAdminIsAlreadyAssigned(adminId);
     }
 
 
-    public String getLoginAdmin(String email, String password){
+    public String getLoginAdmin(String email, String password) {
         return admin.loginAdmin(email, password);
+    }
+
+
+    public int getNumbers() {
+        return admin.countAdmin();
+    }
+
+    public int getNumbersOfManagers() {
+        return admin.countManagers();
+    }
+
+    public int countPromotions() {
+        return admin.countPromotions();
+    }
+
+    public int countNewAdmins() {
+        return admin.countNewAdmins();
+    }
+    public void deleteAdminByids(int adminId) {
+         admin.deleteAdminById(adminId);
     }
 
 

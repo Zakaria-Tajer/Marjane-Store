@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 @Table(name = "managers", schema = "marjpromo")
 @NamedQuery(name = "hashPassword", query = "UPDATE ManagersEntity m SET m.password = ?1 WHERE m.managerId = ?2")
 @NamedQuery(name = "getManagerId", query = "SELECT m FROM ManagersEntity m WHERE m.email = ?1")
+@NamedQuery(name = "getCountsManager", query = "SELECT  count(m) FROM ManagersEntity m")
 public class ManagersEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
