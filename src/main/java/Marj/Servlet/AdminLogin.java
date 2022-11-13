@@ -31,7 +31,7 @@ public class AdminLogin extends HttpServlet {
             if (hashPassword.validPassword(password, adminConst.getPassword())) {
                 HttpSession session = request.getSession();
 
-                session.setAttribute("id", adminConst.getUniqueId());
+                session.setAttribute("unique_id", adminConst.getUniqueId());
                 session.setAttribute("countsAdmin", adminController.getNumbers());
                 session.setAttribute("countsManager", adminController.getNumbersOfManagers());
                 session.setAttribute("countsPromotions", adminController.countPromotions());

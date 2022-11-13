@@ -185,12 +185,7 @@
                         </td>
                         <td class="py-4 px-6">
                             <form action="${pageContext.request.contextPath}/DeleteAdmin" method="post">
-                                <%--                                <a--%>
-                                <%--                                        href="?id=<%= admin.getAdminId() %>"--%>
-                                <%--                                        class="font-medium text-[#C70000] hover:underline"--%>
-                                <%--                                        name="<%= admin.getAdminId() %>"--%>
-                                <%--                                >Delete</a--%>
-                                <%--                                >--%>
+
                                 <input type="hidden" value="<%= admin.getAdminId() %>" name="id">
                                 <input type="submit" placeholder="delete"
                                        class="font-medium text-[#C70000] hover:underline">
