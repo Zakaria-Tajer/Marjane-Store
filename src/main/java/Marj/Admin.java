@@ -15,6 +15,7 @@ import entity.CentersEntity;
 import entity.ManagersEntity;
 import entity.PromotionsEntity;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -197,11 +198,11 @@ public class Admin implements Marj.Interfaces.Admin {
 
         int tempReduction;
 
-        do {
-            System.out.println("please select a reduction less than 50%");
-            reductionTwo = scanner.nextInt();
-
-        } while (reduction <= 50);
+//        do {
+//            System.out.println("please select a reduction less than 50%");
+//            reductionTwo = scanner.nextInt();
+//
+//        } while (reduction <= 50);
 
         System.out.println("Select center: ");
         for (CentersEntity c : centers) {
@@ -220,10 +221,10 @@ public class Admin implements Marj.Interfaces.Admin {
 
 
         if (stock != 0) {
-            if (reduction > 50) tempReduction = reductionTwo;
-            else tempReduction = reduction;
+//            if (reduction > 50) tempReduction = reductionTwo;
+//            else tempReduction = reduction;
 
-            promotionsController.generateAPromotions(tempReduction, centerFilteredId, stock, categoryId, uuiDs.uuid(), "waiting");
+            promotionsController.generateAPromotions(reduction, centerFilteredId, stock, categoryId, uuiDs.uuid(), "waiting", LocalDate.now());
         }
 
     }

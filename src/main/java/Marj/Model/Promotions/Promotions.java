@@ -4,6 +4,8 @@ import entity.AdminEntity;
 import entity.PromotionsEntity;
 import jakarta.persistence.*;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +41,7 @@ public class Promotions {
     }
 
 
-    public void makeAPromotions(int reduction, int centerId, int stock, int category,String unique_id, String status) {
+    public void makeAPromotions(int reduction, int centerId, int stock, int category,String unique_id, String status, LocalDate expirationDate) {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
@@ -56,6 +58,7 @@ public class Promotions {
             promotions.setCategoryId(category);
             promotions.setPromotionUniqueId(unique_id);
             promotions.setStatus(status);
+            promotions.setPromotionExpiringDate(Date.valueOf(expirationDate));
 
             entityManager.persist(promotions);
 
