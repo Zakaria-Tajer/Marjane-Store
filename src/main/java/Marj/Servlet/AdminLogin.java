@@ -31,17 +31,20 @@ public class AdminLogin extends HttpServlet {
             if (hashPassword.validPassword(password, adminConst.getPassword())) {
                 HttpSession session = request.getSession();
 
+
                 session.setAttribute("unique_id", adminConst.getUniqueId());
                 session.setAttribute("countsAdmin", adminController.getNumbers());
                 session.setAttribute("countsManager", adminController.getNumbersOfManagers());
                 session.setAttribute("countsPromotions", adminController.countPromotions());
                 session.setAttribute("countsNewAdmins", adminController.countNewAdmins());
 
-
-                response.sendRedirect("./Views/Admin/dashboard.jsp");
+                if (AdminConst.getRole().equals("admin")) {
+                    response.sendRedirect("./Views/SubAdmin/dashboard.jsp");
+                } else {
+                    response.sendRedirect("./Views/Admin/dashboard.jsp");
+                }
                 response.setStatus(HttpServletResponse.SC_TEMPORARY_REDIRECT);
-//                RequestDispatcher dispatcher = request.getRequestDispatcher("./Views/Admin/dashboard.jsp");
-//                dispatcher.forward(request, response);
+
 
             } else {
                 System.out.println("Invalid password");

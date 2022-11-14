@@ -21,7 +21,7 @@ public class Mails {
 
 
         String accountMail = "zak.tajer@gmail.com";
-        String password = "tofgspijddplvuzo";
+        String password = "bpmxaakmnoupalse";
 
 
         Session session = Session.getInstance(properties, new Authenticator() {
