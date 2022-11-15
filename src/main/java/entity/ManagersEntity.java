@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 @NamedQuery(name = "hashPassword", query = "UPDATE ManagersEntity m SET m.password = ?1 WHERE m.managerId = ?2")
 @NamedQuery(name = "getManagerId", query = "SELECT m FROM ManagersEntity m WHERE m.email = ?1")
 @NamedQuery(name = "getCountsManager", query = "SELECT  count(m) FROM ManagersEntity m")
+@NamedQuery(name = "managerEmail", query = "SELECT m FROM ManagersEntity m WHERE m.email= ?1")
 public class ManagersEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -22,13 +23,17 @@ public class ManagersEntity {
     @Column(name = "unique_id")
     private String uniqueId;
     @Basic
-    @JoinColumn(name = "city_responsable_for" , referencedColumnName = "center_id")
     @Column(name = "city_responsable_for")
     private int cityResponsableFor;
     @Basic
-    @JoinColumn(name = "city_responsable_for", referencedColumnName = "category_id")
     @Column(name = "category_respo_for")
     private int categoryRespoFor;
+    @ManyToOne
+    @JoinColumn(name = "city_responsable_for", referencedColumnName = "center_id", nullable = false, insertable = false, updatable = false)
+    private CentersEntity centersByCityResponsableFor;
+    @ManyToOne
+    @JoinColumn(name = "category_respo_for", referencedColumnName = "category_id", nullable = false, insertable = false, updatable = false)
+    private CategoryEntity categoryByCategoryRespoFor;
 
     public int getManagerId() {
         return managerId;
@@ -70,6 +75,14 @@ public class ManagersEntity {
         this.cityResponsableFor = cityResponsableFor;
     }
 
+    public int getCategoryRespoFor() {
+        return categoryRespoFor;
+    }
+
+    public void setCategoryRespoFor(int categoryRespoFor) {
+        this.categoryRespoFor = categoryRespoFor;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -79,6 +92,7 @@ public class ManagersEntity {
 
         if (managerId != that.managerId) return false;
         if (cityResponsableFor != that.cityResponsableFor) return false;
+        if (categoryRespoFor != that.categoryRespoFor) return false;
         if (email != null ? !email.equals(that.email) : that.email != null) return false;
         if (password != null ? !password.equals(that.password) : that.password != null) return false;
         if (uniqueId != null ? !uniqueId.equals(that.uniqueId) : that.uniqueId != null) return false;
@@ -93,14 +107,23 @@ public class ManagersEntity {
         result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + (uniqueId != null ? uniqueId.hashCode() : 0);
         result = 31 * result + cityResponsableFor;
+        result = 31 * result + categoryRespoFor;
         return result;
     }
 
-    public int getCategoryRespoFor() {
-        return categoryRespoFor;
+    public CentersEntity getCentersByCityResponsableFor() {
+        return centersByCityResponsableFor;
     }
 
-    public void setCategoryRespoFor(int categoryRespoFor) {
-        this.categoryRespoFor = categoryRespoFor;
+    public void setCentersByCityResponsableFor(CentersEntity centersByCityResponsableFor) {
+        this.centersByCityResponsableFor = centersByCityResponsableFor;
+    }
+
+    public CategoryEntity getCategoryByCategoryRespoFor() {
+        return categoryByCategoryRespoFor;
+    }
+
+    public void setCategoryByCategoryRespoFor(CategoryEntity categoryByCategoryRespoFor) {
+        this.categoryByCategoryRespoFor = categoryByCategoryRespoFor;
     }
 }

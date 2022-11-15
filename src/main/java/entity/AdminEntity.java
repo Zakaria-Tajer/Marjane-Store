@@ -13,10 +13,7 @@ import java.sql.Date;
 @NamedQuery(name = "getCountsNewAdmin", query = "SELECT  count(a) FROM AdminEntity a WHERE a.role = ?1 AND a.newCommers = ?2")
 @NamedQuery(name = "getAllAdminsAssociatedCenters", query = "SELECT a FROM AdminEntity a JOIN CentersEntity c WHERE a.role = ?1")
 public class AdminEntity {
-
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JoinColumn(name = "admin_id", referencedColumnName = "admin_respo")
-    @Basic
     @Id
     @Column(name = "admin_id")
     private int adminId;
@@ -29,21 +26,12 @@ public class AdminEntity {
     @Basic
     @Column(name = "unique_id")
     private String uniqueId;
-
     @Basic
     @Column(name = "role")
     private String role;
     @Basic
     @Column(name = "new_commers")
     private Date newCommers;
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
 
     public int getAdminId() {
         return adminId;
@@ -77,6 +65,22 @@ public class AdminEntity {
         this.uniqueId = uniqueId;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public Date getNewCommers() {
+        return newCommers;
+    }
+
+    public void setNewCommers(Date newCommers) {
+        this.newCommers = newCommers;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -89,6 +93,7 @@ public class AdminEntity {
         if (password != null ? !password.equals(that.password) : that.password != null) return false;
         if (uniqueId != null ? !uniqueId.equals(that.uniqueId) : that.uniqueId != null) return false;
         if (role != null ? !role.equals(that.role) : that.role != null) return false;
+        if (newCommers != null ? !newCommers.equals(that.newCommers) : that.newCommers != null) return false;
 
         return true;
     }
@@ -100,14 +105,7 @@ public class AdminEntity {
         result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + (uniqueId != null ? uniqueId.hashCode() : 0);
         result = 31 * result + (role != null ? role.hashCode() : 0);
+        result = 31 * result + (newCommers != null ? newCommers.hashCode() : 0);
         return result;
-    }
-
-    public Date getNewCommers() {
-        return newCommers;
-    }
-
-    public void setNewCommers(Date newCommers) {
-        this.newCommers = newCommers;
     }
 }

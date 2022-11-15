@@ -20,6 +20,9 @@ public class CentersEntity {
     @Basic
     @Column(name = "center_unique_id")
     private String centerUniqueId;
+    @ManyToOne
+    @JoinColumn(name = "admin_respo", referencedColumnName = "admin_id", nullable = false, insertable = false, updatable = false)
+    private AdminEntity adminByAdminRespo;
 
     public int getCenterId() {
         return centerId;
@@ -28,7 +31,7 @@ public class CentersEntity {
     public void setCenterId(int centerId) {
         this.centerId = centerId;
     }
-    @JoinColumn(name = "admin_respo", referencedColumnName = "admin_id")
+
     public int getAdminRespo() {
         return adminRespo;
     }
@@ -78,7 +81,11 @@ public class CentersEntity {
         return result;
     }
 
+    public AdminEntity getAdminByAdminRespo() {
+        return adminByAdminRespo;
+    }
 
-
-
+    public void setAdminByAdminRespo(AdminEntity adminByAdminRespo) {
+        this.adminByAdminRespo = adminByAdminRespo;
+    }
 }

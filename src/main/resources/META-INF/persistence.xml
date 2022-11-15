@@ -10,6 +10,11 @@
         <class>entity.ManagersEntity</class>
         <class>entity.CategoryEntity</class>
         <class>entity.PromotionsEntity</class>
+        <class>entity.AdminEntity</class>
+        <class>entity.CategoryEntity</class>
+        <class>entity.CentersEntity</class>
+        <class>entity.ManagersEntity</class>
+        <class>entity.PromotionsEntity</class>
         <properties>
             <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/marjpromo"/>
             <property name="hibernate.connection.driver_class" value="com.mysql.cj.jdbc.Driver"/>

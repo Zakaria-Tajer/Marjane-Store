@@ -75,7 +75,7 @@
                     method="post"
                     class="w-2/5 space-x-2 rounded-md h-fit py-3 px-3 bg-white shadow-2xl rounded-md space-y-20"
             >
-                <div class="absolute top-2 w-2/5 flex items-center justify-center">
+                <div class="absolute -top-20 w-2/5 flex items-center justify-center">
 <%--                    <video class="w-56 bg-transparent" autoplay loop>--%>
 <%--                        <source--%>
 <%--                                type="video/mp4"--%>

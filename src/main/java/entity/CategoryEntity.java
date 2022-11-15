@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "category", schema = "marjpromo")
 @NamedQuery(name = "getAllCategories", query = "SELECT c FROM CategoryEntity c")
+
 public class CategoryEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
