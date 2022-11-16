@@ -28,12 +28,11 @@ public class Manager extends DbConnection {
             ManagerQuery.setParameter(1, email);
 
             for (ManagersEntity manager : ManagerQuery.getResultList()) {
-                System.out.println(manager.getCityResponsableFor());
-
                 ManagerData.setEmail(manager.getEmail());
                 ManagerData.setPassword(manager.getPassword());
                 ManagerData.setUniqueId(manager.getUniqueId());
-//                ManagerData.setCityResponsableFor(manager.getCityResponsableFor());
+                ManagerData.setCentersByCityResponsableFor(manager.getCentersByCityResponsableFor().getCity());
+                ManagerData.setCategoryByCategoryRespoFor(manager.getCategoryByCategoryRespoFor().getCategoryName());
                 ManagerData.setCityResponsableFor(manager.getCityResponsableFor());
             }
 

@@ -111,11 +111,11 @@
                         <%= promos.getStock()%>
                     </td>
                     <td class="py-4 px-6">
-                        <%= promos.getCenterId()%>
+                        <%= promos.getCentersByCenterId().getCity()%>
                     </td>
 
                     <td class="py-4 px-6">
-                        <%= promos.getCategoryId()%>
+                        <%= promos.getCategoryByCategoryId().getCategoryName()%>
                     </td>
                     <td class="py-4 px-6">
                         <%= promos.getPromotionExpiringDate()%>

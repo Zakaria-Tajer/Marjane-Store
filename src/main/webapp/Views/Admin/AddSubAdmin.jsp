@@ -30,7 +30,6 @@
     <script src="${pageContext.request.contextPath}/WebComponents/Navbar.js" type="module"></script>
 </head>
 <body>
-<body>
 <div class="w-full bg-gray-400 min-h-screen flex">
     <nav-component></nav-component>
 

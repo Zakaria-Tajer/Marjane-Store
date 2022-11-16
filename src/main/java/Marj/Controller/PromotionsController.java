@@ -19,5 +19,13 @@ public class PromotionsController {
         promotions.makeAPromotions(reduction, centerId, stock, category, unique_id, status,expirationDate);
     }
 
+    public String updatePromotionsByManager(int promotionId, String status){
+        return promotions.updatePromotionsById(promotionId, status);
+    }
+
+    public List<PromotionsEntity> getAllPromotionsByStatus(){
+        return promotions.getPromotionsWithStatusWait();
+    }
+
 
 }

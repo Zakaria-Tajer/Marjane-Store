@@ -73,4 +73,68 @@ public class Promotions {
 
         }
     }
+
+    public String updatePromotionsById(int promotionId, String status) {
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+
+
+        String msg = "";
+        try {
+            transaction.begin();
+
+            Query promotionQuery = entityManager.createQuery("UPDATE PromotionsEntity p SET p.status = ?1 WHERE p.promotionId = ?2");
+            promotionQuery.setParameter(1, status);
+            promotionQuery.setParameter(2, promotionId);
+
+            int exe = promotionQuery.executeUpdate();
+
+            if(exe > 0){
+                System.out.println("updated");
+                msg = "updated";
+            }
+            transaction.commit();
+
+        } finally {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+            entityManager.close();
+            entityManagerFactory.close();
+
+        }
+
+        return msg;
+    }
+
+    public List<PromotionsEntity> getPromotionsWithStatusWait() {
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+
+
+        List<PromotionsEntity> promotionsLists = new ArrayList<>();
+        try {
+            transaction.begin();
+            TypedQuery<PromotionsEntity> promotionsQuery = entityManager.createNamedQuery("getPromotionsByStatus", PromotionsEntity.class);
+
+            promotionsQuery.setParameter(1, "waiting");
+
+           for (PromotionsEntity entity : promotionsQuery.getResultList()){
+               promotionsLists.add(entity);
+           }
+            transaction.commit();
+
+        } finally {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+            entityManager.close();
+            entityManagerFactory.close();
+
+        }
+
+        return promotionsLists;
+    }
 }

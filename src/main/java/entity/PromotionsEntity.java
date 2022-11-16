@@ -9,6 +9,7 @@ import java.sql.Date;
 @NamedQuery(name = "promotionsList", query = "SELECT p FROM PromotionsEntity p")
 @NamedQuery(name = "getPromotionsManager", query = "SELECT  count(p) FROM PromotionsEntity p")
 @NamedQuery(name = "getCenterIdProm", query = "SELECT p FROM PromotionsEntity p WHERE p.centerId= ?1")
+@NamedQuery(name = "getPromotionsByStatus", query = "SELECT p  FROM PromotionsEntity p WHERE p.status = ?1")
 
 public class PromotionsEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)

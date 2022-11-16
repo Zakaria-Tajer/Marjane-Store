@@ -1,8 +1,6 @@
 package Marj.Servlet;
 
-import Marj.Controller.AdminController;
 import Marj.Controller.ManagerController;
-import Marj.Data.AdminConst;
 import Marj.Data.ManagerData;
 import Marj.helper.HashPassword;
 import entity.PromotionsEntity;
