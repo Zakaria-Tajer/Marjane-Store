@@ -33,6 +33,9 @@
 <%
     AdminController admins = new AdminController();
 
+    if(session.getAttribute("unique_id") == null) {
+        response.sendRedirect(".");
+    }
 
 %>
 <div class="w-full min-h-screen flex">
@@ -51,9 +54,7 @@
                     <div class="py-3 px-3 bg-gray-100 w-fit rounded-md">
                         <i class="fa-solid fa-users text-3xl text-gray-500"></i>
                     </div>
-                    <!--  -->
-                    <h1>Chart here</h1>
-                    <!--  -->
+
                 </div>
                 <div class="w-full">
                     <h1 style="font-family: 'Poppins', sans-serif" class="text-white">
@@ -77,9 +78,7 @@
                     <div class="py-3 px-5 bg-gray-100 w-fit rounded-md">
                         <i class="fa-solid fa-user text-3xl"></i>
                     </div>
-                    <!--  -->
-                    <h1>Chart here</h1>
-                    <!--  -->
+
                 </div>
                 <div class="w-full">
                     <h1 style="font-family: 'Poppins', sans-serif" class="">
@@ -109,9 +108,7 @@
                     <div class="py-3 px-5 bg-gray-100 w-fit rounded-md">
                         <i class="fa-solid fa-users text-3xl text-gray-500"></i>
                     </div>
-                    <!--  -->
-                    <h1>Chart here</h1>
-                    <!--  -->
+
                 </div>
                 <div class="w-full">
                     <h1 style="font-family: 'Poppins', sans-serif">Total managers</h1>
@@ -131,9 +128,7 @@
                     <div class="py-3 px-5 bg-gray-100 w-fit rounded-md">
                         <i class="fa-solid fa-tag text-3xl"></i>
                     </div>
-                    <!--  -->
-                    <h1>Chart here</h1>
-                    <!--  -->
+
                 </div>
                 <div class="w-full">
                     <h1 style="font-family: 'Poppins', sans-serif">
@@ -187,8 +182,10 @@
                             <form action="${pageContext.request.contextPath}/DeleteAdmin" method="post">
 
                                 <input type="hidden" value="<%= admin.getAdminId() %>" name="id">
-                                <input type="submit" placeholder="delete"
+                                <button type="submit"
                                        class="font-medium text-[#C70000] hover:underline">
+                                    delete
+                                </button>
                             </form>
                         </td>
                     </tr>

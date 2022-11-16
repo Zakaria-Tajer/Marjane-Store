@@ -1,4 +1,4 @@
-<%--
+<%@ page import="Marj.Controller.AdminController" %><%--
   Created by IntelliJ IDEA.
   User: cosmi
   Date: 11/14/2022
@@ -17,7 +17,14 @@
 <body>
 
 
+<%
+    AdminController admins = new AdminController();
 
+    if(session.getAttribute("unique_id") == null) {
+        response.sendRedirect(".");
+    }
+
+%>
 
 <div class="min-h-screen bg-gray-100">
     <nav-component></nav-component>

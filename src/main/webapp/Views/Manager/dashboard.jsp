@@ -3,7 +3,10 @@
 <%@ page import="entity.PromotionsEntity" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.sql.SQLException" %>
-<%@ page import="Marj.Data.ManagerData" %><%--
+<%@ page import="Marj.Data.ManagerData" %>
+<%@ page import="java.time.format.DateTimeFormatter" %>
+<%@ page import="java.util.Date" %>
+<%@ page import="java.util.Calendar" %><%--
   Created by IntelliJ IDEA.
   User: cosmi
   Date: 11/14/2022
@@ -36,8 +39,11 @@
     />
 </head>
 <body>
-<%
 
+<%
+    if (session.getAttribute("unique_id") == null) {
+        response.sendRedirect(".");
+    }
     ManagerController managerController = new ManagerController();
     ManagerData managerData = new ManagerData();
 %>
@@ -66,6 +72,13 @@
         </div>
 
 
+        <%
+            Calendar rightNow = Calendar.getInstance();
+            int hour = rightNow.get(Calendar.HOUR_OF_DAY);
+
+            if (hour < 8 || hour <= 12) {
+
+        %>
         <div class="overflow-x-auto m-14 px-3 py-2 relative shadow-md sm:rounded-lg w-3/4">
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -98,7 +111,7 @@
                 </thead>
                 <tbody>
                 <%
-                        for (PromotionsEntity promos : ManagerData.getPromos()) {
+                    for (PromotionsEntity promos : ManagerData.getPromos()) {
                 %>
                 <tr class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
                     <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
@@ -124,7 +137,8 @@
                         <%= promos.getStatus()%>
                     </td>
                     <td class="py-4 px-6">
-                        <a href="./EditPromotions.jsp" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                        <a href="./EditPromotions.jsp"
+                           class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
                     </td>
                 </tr>
                 <%
@@ -134,6 +148,19 @@
                 </tbody>
             </table>
         </div>
+
+        <%
+        } else {
+        %>
+
+        <div class="w-full h-1/2 flex items-center justify-center flex-col">
+            <iframe class="w-1/2 h-96" src="https://embed.lottiefiles.com/animation/51661"></iframe>
+            <h1 class="text-2xl text-[#0055A6]" style="font-family: 'Poppins', sans-serif">Closed</h1>
+        </div>
+
+        <%
+            }
+        %>
 
     </div>
 </div>
